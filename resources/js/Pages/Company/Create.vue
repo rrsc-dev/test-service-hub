@@ -6,7 +6,6 @@ import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 
-// Inicializando o formulário com o estado padrão
 const form = useForm({
     name: '',
     document: '',
@@ -16,7 +15,6 @@ const form = useForm({
     is_active: true,
 });
 
-// Função para submeter os dados para a rota store
 const submit = () => {
     form.post(route('companies.store'), {
         onSuccess: () => form.reset(),

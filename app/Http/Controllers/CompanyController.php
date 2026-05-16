@@ -35,4 +35,28 @@ class CompanyController extends Controller
 
         return redirect()->route('dashboard')->with('message', 'Empresa cadastrada com sucesso!');
     }
+
+    public function show(Company $company) {
+
+    }
+
+    public function edit(Company $company) {
+
+    }
+
+    public function destroy(Company $company) {
+
+    }
+
+    public function update(Request $request, Company $company) {
+        
+    }
+
+    public function toggleStatus(Company $company)
+    {
+        $company->is_active = !$company->is_active;
+        $company->save();
+
+        return redirect()->back();
+    }
 }
