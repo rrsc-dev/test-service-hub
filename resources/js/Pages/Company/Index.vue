@@ -2,7 +2,7 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, Link, router } from '@inertiajs/vue3';
 import ToggleButton from '@/Components/ToggleButton.vue';
-import { Edit, Trash2 } from 'lucide-vue-next';
+import { Edit, Trash2, Info } from 'lucide-vue-next';
 
 defineProps({
     companies: Array
@@ -62,6 +62,9 @@ const deleteCompany = (id) => {
                                     <ToggleButton class="mx-auto" :modelValue="company.is_active" @update:modelValue="toggleStatus(company.id)" />
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-3 text-center">
+                                    <Link :href="route('companies.show', company.id)" class="inline-flex items-center text-gray-600 hover:text-gray-900 transition-colors" title="Ver detalhes da empresa">
+                                        <Info class="w-5 h-5"  />
+                                    </Link>
                                     <Link :href="route('companies.edit', company.id)" class="inline-flex items-center text-indigo-600 hover:text-indigo-900 transition-colors" title="Editar empresa">
                                         <Edit class="w-5 h-5" />
                                     </Link>

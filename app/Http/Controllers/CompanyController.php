@@ -37,19 +37,39 @@ class CompanyController extends Controller
     }
 
     public function show(Company $company) {
+        $company->load('projects');
 
+        return Inertia::render('Company/Show', [
+            'company' => $company
+        ]);
     }
 
     public function edit(Company $company) {
-
+        return Inertia::render('Company/Edit', [
+            'company' => $company
+        ]);
     }
 
     public function destroy(Company $company) {
+        $company->delete();
 
+        return redirect()->route('companies.index')->with('message', 'Empresa excluída com sucesso!');
     }
 
     public function update(Request $request, Company $company) {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'document' => 'nullable|string|max:20|unique:companies,document,' . $company->id,
+            'email' => 'nullable|email|max:255|unique:companies,email,' . $company->id,
+            'phone' => 'nullable|string|max:20',
+            'address' => 'nullable|string|max:255',
+        ]);
+
+        $validated['slug'] = Str::slug($validated['name']);
         
+        $company->update($validated);
+
+        return redirect()->route('companies.index')->with('message', 'Empresa atualizada com sucesso!');
     }
 
     public function toggleStatus(Company $company)

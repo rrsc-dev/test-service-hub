@@ -31,6 +31,8 @@ Route::middleware('auth')->group(function () {
     Route::put('/companies/{company}', [CompanyController::class, 'update'])->name('companies.update');
     Route::patch('/companies/{company}/toggle-status', [CompanyController::class, 'toggleStatus'])->name('companies.toggle-status');
     Route::delete('/companies/{company}', [CompanyController::class, 'destroy'])->name('companies.destroy');
+
+    Route::get('/companies/{company}', [CompanyController::class, 'show'])->name('companies.show');
 });
 
 
