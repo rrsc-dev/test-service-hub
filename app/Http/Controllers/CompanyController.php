@@ -9,10 +9,27 @@ use Illuminate\Support\Str;
 
 class CompanyController extends Controller
 {
-    public function index() {
-        $companies = Company::orderBy('name')->get();
+    public function index(Request $request) {
+        $query = Company::query();
+
+        // Filtra pelo Nome
+    if ($request->filled('name')) {
+        $query->where('name', 'like', '%' . $request->name . '%');
+    }
+
+    // Filtra pelo Documento
+    if ($request->filled('document')) {
+        // Limpa a máscara (deixa apenas números) antes de buscar no banco
+        $document = preg_replace('/[^0-9]/', '', $request->document);
+        $query->where('document', 'like', '%' . $document . '%');
+    }
+
+        $companies = $query->orderBy('name')->paginate(10)->withQueryString();
         
-        return Inertia::render('Company/Index', ['companies' => $companies]);
+        return Inertia::render('Company/Index', [
+            'companies' => $companies,
+            'filters' => $request->only('search')
+        ]);
     }
 
     public function create() {
